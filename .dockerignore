@@ -1,0 +1,17 @@
+# Docker build context excludes
+node_modules
+npm-debug.log
+dist
+build
+.git
+.gitignore
+.dockerignore
+.env
+.env.local
+.env.production.local
+.vscode
+.idea
+*.md
+!README.md
+uploads
+.DS_Store
