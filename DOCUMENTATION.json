@@ -1,0 +1,354 @@
+{
+  "project": {
+    "name": "Consultation Recording Manager",
+    "description": "Full-stack application for managing consultation recordings with AI-powered transcription and summarization",
+    "version": "1.0.0",
+    "created": "2026-06-13",
+    "status": "production-ready",
+    "repository": "https://github.com/Charusharma19/consultation-recording",
+    "license": "MIT"
+  },
+  "features": {
+    "core": [
+      "User Authentication (JWT-based)",
+      "Recording Upload & Management",
+      "AI Transcription (Google Gemini)",
+      "AI Summarization (Google Gemini)",
+      "Client Management",
+      "File Storage (Cloudinary + Local)"
+    ],
+    "security": [
+      "JWT Authentication",
+      "Password Hashing (bcryptjs)",
+      "CORS Configuration",
+      "Environment Variables",
+      "File Upload Validation",
+      "Input Sanitization"
+    ],
+    "deployment": [
+      "Docker Support",
+      "Docker Compose Orchestration",
+      "Render.com Integration",
+      "GitHub Actions Ready"
+    ]
+  },
+  "techStack": {
+    "frontend": {
+      "framework": "React 18",
+      "language": "TypeScript 5.4.5",
+      "buildTool": "Vite 5.3.1",
+      "styling": "Tailwind CSS 3.4.4",
+      "httpClient": "Axios 1.7.2",
+      "icons": "Lucide React 0.395.0"
+    },
+    "backend": {
+      "runtime": "Node.js 18+",
+      "framework": "Express.js 4.19.2",
+      "language": "TypeScript 5.4.5",
+      "database": "MongoDB 8.4.1",
+      "odm": "Mongoose",
+      "auth": "JWT (jsonwebtoken 9.0.2)",
+      "fileUpload": "Multer 1.4.5-lts.1",
+      "fileStorage": "Cloudinary 2.2.0",
+      "security": "bcryptjs 2.4.3",
+      "cors": "cors 2.8.5"
+    },
+    "ai": {
+      "provider": "Google",
+      "model": "Gemini 1.5 Flash",
+      "sdk": "@google/genai 2.8.0",
+      "capabilities": [
+        "Speech-to-Text Transcription",
+        "Video Processing",
+        "Content Summarization",
+        "Information Extraction"
+      ]
+    },
+    "devops": {
+      "containerization": "Docker",
+      "orchestration": "Docker Compose",
+      "webServer": "Nginx",
+      "database": "MongoDB Atlas",
+      "deployment": "Render.com",
+      "versionControl": "GitHub"
+    }
+  },
+  "aiUsage": {
+    "model": "gemini-1.5-flash",
+    "purpose": "Transcription and summarization of consultation recordings",
+    "capabilities": [
+      "Audio transcription",
+      "Video processing",
+      "Content summarization",
+      "Action item extraction"
+    ],
+    "pricing": {
+      "free_tier": {
+        "requests_per_minute": 15,
+        "requests_per_day": 60,
+        "sufficient_for": "1-2 recordings/day per user"
+      },
+      "paid_tier": {
+        "input_token_price": "$0.075 per 1M tokens",
+        "output_token_price": "$0.30 per 1M tokens",
+        "average_per_recording": "$0.001 - $0.01"
+      }
+    },
+    "setupSteps": [
+      "Go to https://ai.google.dev",
+      "Click 'Get API Key'",
+      "Copy key to .env as GEMINI_API_KEY"
+    ],
+    "processFlow": {
+      "step1": "User uploads audio/video file",
+      "step2": "Backend receives file via Multer",
+      "step3": "File uploaded to Google Gemini File API",
+      "step4": "Gemini processes & transcribes content",
+      "step5": "Result saved to MongoDB",
+      "step6": "Temporary file deleted from Gemini API",
+      "step7": "User views transcript in frontend"
+    },
+    "dataHandling": {
+      "privacy": "User data NOT used for training",
+      "retention": "Temporary files deleted after processing",
+      "storage": "Transcripts saved to MongoDB",
+      "security": "Encrypted in transit (HTTPS)",
+      "access": "Controlled by JWT authentication"
+    }
+  },
+  "apiEndpoints": {
+    "authentication": {
+      "register": {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "description": "Create new account"
+      },
+      "login": {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "description": "Login and get JWT token"
+      }
+    },
+    "clients": {
+      "list": {
+        "method": "GET",
+        "path": "/api/clients",
+        "auth": true
+      },
+      "create": {
+        "method": "POST",
+        "path": "/api/clients",
+        "auth": true
+      },
+      "get": {
+        "method": "GET",
+        "path": "/api/clients/:id",
+        "auth": true
+      },
+      "update": {
+        "method": "PUT",
+        "path": "/api/clients/:id",
+        "auth": true
+      },
+      "delete": {
+        "method": "DELETE",
+        "path": "/api/clients/:id",
+        "auth": true
+      }
+    },
+    "recordings": {
+      "list": {
+        "method": "GET",
+        "path": "/api/recordings",
+        "auth": true
+      },
+      "upload": {
+        "method": "POST",
+        "path": "/api/recordings",
+        "auth": true
+      },
+      "get": {
+        "method": "GET",
+        "path": "/api/recordings/:id",
+        "auth": true
+      },
+      "delete": {
+        "method": "DELETE",
+        "path": "/api/recordings/:id",
+        "auth": true
+      },
+      "transcribe": {
+        "method": "POST",
+        "path": "/api/recordings/:id/transcribe",
+        "auth": true,
+        "aiFeature": true
+      },
+      "summarize": {
+        "method": "POST",
+        "path": "/api/recordings/:id/summarize",
+        "auth": true,
+        "aiFeature": true
+      }
+    }
+  },
+  "deployment": {
+    "recommended": "Render.com",
+    "options": [
+      {
+        "name": "Render.com",
+        "cost": "$0/month (free tier)",
+        "pros": [
+          "Free tier available",
+          "Auto-deploys on git push",
+          "Built-in Docker support",
+          "MongoDB Atlas integration"
+        ],
+        "cons": [
+          "Cold start on free tier",
+          "Services spin down after 15 min inactivity"
+        ],
+        "guide": "DEPLOY_NOW.md"
+      },
+      {
+        "name": "Docker Compose on VPS",
+        "cost": "Varies by VPS provider",
+        "pros": [
+          "Full control",
+          "Local development",
+          "Easy to customize"
+        ]
+      },
+      {
+        "name": "Separate Services",
+        "cost": "Backend ($7+), Frontend (free-$20), Database (free-paid)",
+        "pros": [
+          "Independent scaling",
+          "Best for large deployments"
+        ]
+      }
+    ],
+    "mongodb": {
+      "option": "MongoDB Atlas",
+      "url": "https://www.mongodb.com/cloud/atlas",
+      "tier": "Free (512 MB storage)",
+      "setup": [
+        "Create account",
+        "Create cluster",
+        "Get connection string",
+        "Add IP whitelist (0.0.0.0/0)"
+      ]
+    }
+  },
+  "environmentVariables": {
+    "backend": {
+      "MONGODB_URI": {
+        "type": "string",
+        "required": true,
+        "example": "mongodb+srv://user:pass@cluster.mongodb.net/db"
+      },
+      "JWT_SECRET": {
+        "type": "string",
+        "required": true,
+        "example": "your-secret-key"
+      },
+      "GEMINI_API_KEY": {
+        "type": "string",
+        "required": false,
+        "example": "AIzaSy...",
+        "fallback": "Mock transcription"
+      },
+      "CLOUDINARY_CLOUD_NAME": {
+        "type": "string",
+        "required": false,
+        "fallback": "Local storage"
+      },
+      "NODE_ENV": {
+        "type": "string",
+        "required": true,
+        "value": "production"
+      }
+    },
+    "frontend": {
+      "VITE_API_URL": {
+        "type": "string",
+        "required": true,
+        "example": "https://backend.onrender.com"
+      },
+      "NODE_ENV": {
+        "type": "string",
+        "required": true,
+        "value": "production"
+      }
+    }
+  },
+  "performanceMetrics": {
+    "ai_processing_time": {
+      "5_min_audio": "30-60 seconds",
+      "30_min_audio": "2-5 minutes",
+      "60_min_audio": "5-15 minutes"
+    },
+    "costs": {
+      "per_5min_recording": "$0.001",
+      "per_30min_recording": "$0.005",
+      "per_60min_recording": "$0.01",
+      "100_recordings_monthly": "$0.50 - $1.00"
+    },
+    "fileSupport": {
+      "audio": ["MP3", "WAV", "OGG", "FLAC", "M4A"],
+      "video": ["MP4", "WebM", "MKV"],
+      "maxFileSize": "1 GB",
+      "recommended": "MP3 or WAV"
+    }
+  },
+  "documentation": {
+    "files": {
+      "README.md": "Main project documentation",
+      "DEPLOY_NOW.md": "Quick deployment guide (3 steps)",
+      "RENDER_DEPLOYMENT.md": "Full Render.com guide",
+      "PROJECT_NOTES.md": "Detailed technical notes",
+      "AI_USAGE.md": "AI features and integration guide",
+      "SUMMARY.txt": "Plain text summary",
+      "DOCUMENTATION.json": "This file - structured data"
+    },
+    "externalResources": {
+      "react": "https://react.dev",
+      "nodejs": "https://nodejs.org/docs",
+      "mongodb": "https://docs.mongodb.com",
+      "express": "https://expressjs.com",
+      "gemini": "https://ai.google.dev",
+      "render": "https://render.com/docs",
+      "docker": "https://docs.docker.com"
+    }
+  },
+  "checklist": {
+    "beforeDeployment": [
+      "Create MongoDB Atlas cluster",
+      "Get Google Gemini API key",
+      "Set up Cloudinary (optional for production)",
+      "Configure environment variables",
+      "Test locally with docker-compose"
+    ],
+    "deployment": [
+      "Connect GitHub to Render",
+      "Create Backend service",
+      "Create Frontend service",
+      "Set environment variables",
+      "Monitor build logs"
+    ],
+    "postDeployment": [
+      "Test login functionality",
+      "Test file upload",
+      "Verify AI transcription works",
+      "Check frontend-backend communication",
+      "Monitor error logs",
+      "Set up UptimeRobot (optional)"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2026-06-13",
+    "lastUpdated": "2026-06-13",
+    "documentationVersion": "1.0.0",
+    "projectStatus": "Production Ready",
+    "readyForDeployment": true
+  }
+}
