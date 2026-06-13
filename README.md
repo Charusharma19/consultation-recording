@@ -114,7 +114,7 @@ docker-compose up --build
 .\start-docker.ps1
 ```
 
-Then visit: **http://localhost**
+
 
 ---
 
