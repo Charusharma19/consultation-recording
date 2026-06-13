@@ -19,8 +19,9 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middlewares
+const corsOrigin = process.env.FRONTEND_URL || '*';
 app.use(cors({
-  origin: '*', // For local dev, allow any origin. In production, define front-end URLs
+  origin: corsOrigin,
   credentials: true,
 }));
 app.use(express.json());

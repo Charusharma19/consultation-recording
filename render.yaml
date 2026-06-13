@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: consultation-backend
+    runtime: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    region: oregon
+    envVars:
+      - key: MONGODB_URI
+        scope: run
+        sync: false
+      - key: JWT_SECRET
+        scope: run
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: CLOUDINARY_CLOUD_NAME
+        scope: run
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        scope: run
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        scope: run
+        sync: false
+      - key: GEMINI_API_KEY
+        scope: run
+        sync: false
+      - key: FRONTEND_URL
+        scope: run
+        sync: false
+    healthCheckPath: /
+    numInstances: 1
+
+  - type: web
+    name: consultation-frontend
+    runtime: docker
+    dockerfilePath: frontend/Dockerfile
+    dockerContext: frontend
+    region: oregon
+    envVars:
+      - key: VITE_API_URL
+        value: https://consultation-backend.onrender.com
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /
+    numInstances: 1
